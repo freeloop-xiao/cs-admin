@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.admin.system.manager.mapper.SysAdminMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cs.admin.system.manager.domain.entity.SysAdmin">
+        <id column="user_id" property="userId"/>
+        <result column="account" property="account"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="sex" property="sex"/>
+        <result column="birthday" property="birthday"/>
+        <result column="is_locked" property="isLocked"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="pwd_reset_time" property="pwdResetTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+    </resultMap>
+
+    <!-- 管理员DTO查询映射结果 -->
+
+    <resultMap id="AdminResultMap" type="com.cs.admin.system.manager.domain.dto.AdminDTO">
+        <id column="user_id" property="userId"/>
+        <result column="account" property="account"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="sex" property="sex"/>
+        <result column="birthday" property="birthday"/>
+        <result column="is_locked" property="isLocked"/>
+        <result column="pwd_reset_time" property="pwdResetTime"/>
+        <result column="create_time" property="createTime"/>
+
+        <collection column="user_id" property="deptList" ofType="com.cs.admin.system.manager.domain.entity.SysDept"
+                    select="selectDeptByUserId"/>
+
+        <collection column="user_id" property="postList" ofType="com.cs.admin.system.manager.domain.entity.SysPost"
+                    select="selectPostByUserId"/>
+
+        <collection column="user_id" property="roleList" ofType="com.cs.admin.system.manager.domain.entity.SysPost"
+                    select="selectRoleByUserId"/>
+
+        <collection column="user_id" property="permissions" ofType="java.lang.String"
+                    select="selectMenuPermissionByUserId"/>
+    </resultMap>
+
+    <!-- 管理员部门查询映射结果 -->
+    <resultMap id="AdminDeptResultMap" type="com.cs.admin.system.manager.domain.entity.SysDept">
+        <id column="dept_id" property="deptId"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="leader" property="leader"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="status" property="status"/>
+        <result column="parent_id" property="parentId"/>
+    </resultMap>
+
+    <!-- 管理员岗位查询映射结果 -->
+    <resultMap id="AdminPostResultMap" type="com.cs.admin.system.manager.domain.entity.SysPost">
+        <id column="post_id" property="postId"/>
+        <result column="post_code" property="postCode"/>
+        <result column="post_name" property="postName"/>
+        <result column="post_sort" property="postSort"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <resultMap id="AdminRoleResultMap" type="com.cs.admin.system.manager.domain.entity.SysRole">
+        <id column="role_id" property="roleId"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="role_name" property="roleName"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, account, phone, email, password, user_name, nick_name, avatar, sex, birthday, is_locked, del_flag, create_time,pwd_reset_time, create_by, update_time, update_by
+    </sql>
+
+    <sql id="Page_Join_Column_List">
+        SA.user_id, SA.account, SA.phone, SA.email, SA.user_name, SA.nick_name, SA.avatar, SA.sex, SA.birthday, SA.is_locked, SA.del_flag, SA.create_time,SA.pwd_reset_time, SA.create_by, SA.update_time, SA.update_by
+    </sql>
+
+    <sql id="Admin_Column_List">
+        user_id, account, phone, email, password, user_name, nick_name, avatar, sex, birthday, is_locked, create_time
+    </sql>
+
+
+    <select id="selectAdminInfoByAccount" resultMap="AdminResultMap">
+        select
+        <include refid="Admin_Column_List"/>
+        from sys_admin
+        where account = #{account}
+        and del_flag = false
+    </select>
+
+    <select id="selectAdminInfoByUserId" resultMap="AdminResultMap">
+        select
+        <include refid="Admin_Column_List"/>
+        from sys_admin
+        where user_id = #{userId}
+        and del_flag = false
+    </select>
+
+
+    <select id="selectDeptByUserId" resultMap="AdminDeptResultMap">
+        select D.*
+        from sys_admin_dept AD
+                 left join sys_dept D
+                           on AD.dept_id = D.dept_id
+        where AD.user_id = #{userId}
+    </select>
+
+    <select id="selectPostByUserId" resultMap="AdminPostResultMap">
+        select P.*
+        from sys_admin_post AP
+                 left join sys_post P
+                           on AP.post_id = P.post_id
+        where AP.user_id = #{userId}
+    </select>
+
+    <select id="selectRoleByUserId" resultMap="AdminRoleResultMap">
+        select R.*
+        from sys_admin_role AR
+                 left join sys_role R
+                           on AR.role_id = R.role_id
+        where AR.user_id = #{userId}
+    </select>
+
+
+    <select id="selectMenuPermissionByUserId" resultType="java.lang.String">
+        select distinct m.permission
+        from sys_menu m
+                 left join sys_role_menu rm on m.menu_id = rm.menu_id
+                 left join sys_admin_role ur on rm.role_id = ur.role_id
+        where ur.user_id = #{userId}
+          and m.hidden = 0
+    </select>
+
+    <select id="selectByAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_admin
+        where account = #{account}
+        and del_flag = 0
+    </select>
+
+    <select id="selectAdminPage" resultType="com.cs.admin.system.manager.domain.entity.SysAdmin">
+        select
+        <include refid="Page_Join_Column_List" />
+        from sys_admin SA,sys_admin_dept SAD
+        where SA.user_id = SAD.user_id
+        and SA.del_flag = 0
+        <if test="deptId != '' and deptId != null">
+            and SAD.dept_id = #{deptId}
+        </if>
+
+        <if test="sex != '' and sex != null">
+            and SA.sex = #{sex}
+        </if>
+
+        <if test="isLocked != '' and isLocked != null">
+            and SA.is_locked = #{isLocked}
+        </if>
+
+        <if test="startTime != '' and startTime != null">
+            and SA.create_time <![CDATA[ <= ]]> #{startTime}
+        </if>
+
+        <if test="endTime != '' and endTime != null">
+            and SA.create_time <![CDATA[ >= ]]> #{endTime}
+        </if>
+
+        <if test="keyWord != '' and keyWord != null">
+            and (SA.account like CONCAT('%',#{keyWord},'%')
+            or SA.phone like CONCAT('%',#{keyWord},'%')
+            or SA.email like CONCAT('%',#{keyWord},'%')
+            or SA.user_name like CONCAT('%',#{keyWord},'%')
+            or SA.nick_name like CONCAT('%',#{keyWord},'%')
+            )
+        </if>
+    </select>
+
+
+    <update id="deleteByUserId">
+        update sys_admin
+        set del_flag  = 1,
+            update_by = #{updateBy}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updatePwdByUserId">
+        update sys_admin
+        set password       = #{pwd},
+            pwd_reset_time = #{pwdResetTime}
+        where user_id = #{userId}
+    </update>
+
+
+
+
+</mapper>

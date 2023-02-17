@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.admin.system.dict.mapper.SysDictDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cs.admin.system.dict.domain.entity.SysDictData">
+        <id column="data_id" property="dataId"/>
+        <result column="dict_type" property="dictCode"/>
+        <result column="dict_sort" property="dictSort"/>
+        <result column="dict_label" property="dictLabel"/>
+        <result column="dict_value" property="dictValue"/>
+        <result column="is_default" property="isDefault"/>
+        <result column="parent_data_id" property="parentDataId"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        data_id, dict_code, dict_sort, dict_label, dict_value, is_default, parent_data_id, status, create_time, create_by, update_time, update_by, remark
+    </sql>
+
+    <delete id="deleteByDictCode">
+        delete from sys_dict_data where dict_code = #{dictCode}
+    </delete>
+
+    <select id="selectByDictCode" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from sys_dict_data
+        where dict_code = #{dictCode}
+    </select>
+    <select id="selectByDictCodeAndParentDataId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from sys_dict_data
+        where dict_code = #{dictCode}
+        and parent_data_id = #{parentDataId}
+    </select>
+
+</mapper>

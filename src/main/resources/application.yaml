@@ -1,0 +1,18 @@
+server:
+  port: 14888
+spring:
+  profiles:
+    active: dev
+  application:
+    name: cs-admin
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+#  web:
+#    resources:
+#      static-locations: file:D:\workspace\fornt\dist
+logging:
+  level:
+    root: info
+  file:
+    path: logs/
+  config: classpath:log4j2.xml

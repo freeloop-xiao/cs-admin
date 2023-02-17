@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.admin.system.manager.mapper.SysPostMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cs.admin.system.manager.domain.entity.SysPost">
+        <id column="post_id" property="postId"/>
+        <result column="post_code" property="postCode"/>
+        <result column="post_name" property="postName"/>
+        <result column="post_sort" property="postSort"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        post_id, post_code, post_name, post_sort, status, create_by, create_time, update_by, update_time, remark
+    </sql>
+
+    <select id="selectByPostCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_post
+        where post_code = #{postCode}
+    </select>
+
+    <select id="selectByPostName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_post
+        where post_name = #{postName}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+    select P.*
+    from sys_admin_post AP
+             inner join sys_post P
+                        on AP.post_id = P.post_id
+                            and AP.user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.admin.system.manager.mapper.SysMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cs.admin.system.manager.domain.entity.SysMenu">
+        <id column="menu_id" property="menuId"/>
+        <result column="parent_menu_id" property="parentMenuId"/>
+        <result column="menu_sort" property="menuSort"/>
+        <result column="sub_count" property="subCount"/>
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="component" property="component"/>
+        <result column="icon" property="icon"/>
+        <result column="path" property="path"/>
+        <result column="is_frame" property="isFrame"/>
+        <result column="hidden" property="hidden"/>
+        <result column="permission" property="permission"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        menu_id, parent_menu_id, menu_sort, sub_count, type, title, component, icon, path, is_frame, hidden, permission, status, create_by, create_time, update_by, update_time, remark
+    </sql>
+
+    <sql id="Tree_Column_List">
+        m.menu_id, parent_menu_id, menu_sort, sub_count, type, title, component, icon, path, is_frame, hidden, permission, status, create_by, create_time, update_by, update_time, remark
+    </sql>
+
+    <select id="listByParentMenuId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where parent_menu_id = #{parentMenuId}
+    </select>
+
+    <update id="updateSubCount">
+        update sys_menu
+        set sub_count = sub_count + #{num}
+        where menu_id = #{menuId}
+    </update>
+
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select distinct
+        <include refid="Tree_Column_List"/>
+        from
+        sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_admin_role ur on rm.role_id = ur.role_id
+        where ur.user_id = #{userId}
+        and m.hidden = 0
+    </select>
+
+
+    <select id="selectListByRoleId" resultMap="BaseResultMap">
+        select M.*
+        from sys_role_menu RM
+                 inner join sys_menu M
+                            on M.menu_id = RM.menu_id
+                                and RM.role_id = #{roleId}
+    </select>
+
+    <select id="selectByTitleAndTypeAndParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where title = #{title} and parent_menu_id = #{parentId} and type = #{type}
+    </select>
+
+    <select id="selectByNameAndTypeAndParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where name = #{name} and parent_menu_id = #{parentId} and type = #{type}
+    </select>
+
+</mapper>

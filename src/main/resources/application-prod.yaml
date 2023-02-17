@@ -1,0 +1,58 @@
+spring:
+  # 配置数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: freeloop
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0
+    timeout: 1000
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:mapper/*.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: auto
+      update-strategy: not_null
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#是否开启swagger
+swagger:
+  show: false
+#图形验证码过期时间(单位秒)
+captcha:
+  expire: 120
+#是否本地解析ip
+ip:
+  local-parsing: true
+token:
+  client-id: cs-admin
+  client-secret: sIIddwIcADANBgkqhki
+  #签名私钥用Base64对该令牌进行编码
+  private-secret: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMdaOp1iK8KCCc/DqhfT9yaAtedMSbG5b2mEzkyKtkHX9KF5jApgHpXNM4xTaiKBl8CPRwHZIfNSqvh/mXQruNmo2TOmZ4k1g61dTOGEwtZNjQnJXT05GG+ztljepygRYVzzFQwgYEuxbECAdG72fmRuBEGMxYlVnqqtQoy9ooWLAgMBAAECgYEAu2ICqqD2hRR6aIKAxXkGXXiqg0lgE+A76zFcQPI5stZtKcL4cWA8H48MnyBhKSIrJGMI2aHhmbfg4Uf/VAUs8DF3InJwZNwBdyyu10v5NHgwpFsHt0c6Y+tMK/7lpyzHBrBwFgKbrKTXX91CGAxEWKdaiedLOCjJgL86MeG7vNECQQDxaWNAjVkHL1DLL4L8tiraeUhFCsyqG+ACrRGdgn4c6EYsT5oe1kE888M3pmuz4GWBZKikuyd4ZEIH6Xr9N95nAkEA02YwlnIXMff1asj3hk9xGxrAerSWg0s1HXETA0QjkNwdCYRddRG6VKvNGKgoODfLdhS905CbC/TT1/GlUBbhPQJAdh48g98lClDqVSBAFOoE+bSR2cY48ZqF9ok7rzekAPzdKN0h6ainbu1OPTJeTDqlL7RSl5dC7rMPY9Ona7IkTQJBAJ02+113fd6QfHis+sBtJj21GH5o/SKpdNfvdudP7m9V81ZXlTVyOLOtjPsQW9DrVan8ZOwJN/WdX0rSkFHOojUCQESoTOmDjBHC5QO+G0z0Zcui+DyUjdfCS2ARDNb2kiUI1rd4Pw3BBCSwTMmE8BE0E8USBL20rhM7GXao1stwimo=
+  #验签公钥用Base64对该令牌进行编码
+  public-secret: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHWjqdYivCggnPw6oX0/cmgLXnTEmxuW9phM5MirZB1/SheYwKYB6VzTOMU2oigZfAj0cB2SHzUqr4f5l0K7jZqNkzpmeJNYOtXUzhhMLWTY0JyV09ORhvs7ZY3qcoEWFc8xUMIGBLsWxAgHRu9n5kbgRBjMWJVZ6qrUKMvaKFiwIDAQAB
+  #token有效期 默认4小时
+  expire: 14400000
+  #token 续约时长
+  renew: 3600000
+  # 续约触发时间
+  detect: 1800000

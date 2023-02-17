@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.admin.system.manager.mapper.SysAdminRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cs.admin.system.manager.domain.entity.SysAdminRole">
+        <id column="user_id" property="userId" />
+        <result column="role_id" property="roleId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, role_id
+    </sql>
+
+    <select id="countByRoleId" resultType="java.lang.Integer">
+        select count(1)
+        from sys_admin_role
+        where role_id = #{roleId}
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from sys_admin_role where user_id = #{userId}
+    </delete>
+
+</mapper>

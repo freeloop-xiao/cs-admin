@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "rsa.privateKey",
+      "type": "java.lang.String",
+      "description": "token私钥."
+    },
+    {
+      "name": "rsa.publicKey",
+      "type": "java.lang.String",
+      "description": "公钥."
+    },
+    {
+      "name": "swagger.show",
+      "type": "java.lang.String",
+      "description": "swagger开关."
+    },
+    {
+      "name": "swagger.show",
+      "type": "java.lang.String",
+      "description": "Description for swagger.show."
+    }
+  ] }
