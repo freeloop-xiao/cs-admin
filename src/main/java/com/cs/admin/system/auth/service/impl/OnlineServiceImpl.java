@@ -4,14 +4,14 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.cs.admin.system.auth.domain.dto.OnlinePageDTO;
-import com.cs.admin.system.auth.service.OnlineService;
 import com.cs.admin.common.config.AuthYamlConfig;
 import com.cs.admin.common.dto.OnlineInfoDTO;
 import com.cs.admin.common.util.RequestUtil;
 import com.cs.admin.common.util.ResponseUtil;
 import com.cs.admin.common.util.TokenUtil;
 import com.cs.admin.common.vo.PageVO;
+import com.cs.admin.system.auth.domain.dto.OnlinePageDTO;
+import com.cs.admin.system.auth.service.OnlineService;
 import com.cs.admin.system.manager.domain.covert.SysAdminConvert;
 import com.cs.admin.system.manager.domain.vo.AdminVO;
 import lombok.AllArgsConstructor;
@@ -70,7 +70,7 @@ public class OnlineServiceImpl implements OnlineService {
 
 
     @Override
-    public void download(HttpServletResponse response,String keyWord) {
+    public void download(HttpServletResponse response, String keyWord) {
 
         List<OnlineInfoDTO> onlineInfos = getAllOnlineInfo(keyWord);
         List<Map<String, Object>> rows = new ArrayList<>();

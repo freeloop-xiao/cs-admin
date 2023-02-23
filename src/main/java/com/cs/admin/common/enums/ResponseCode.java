@@ -14,28 +14,22 @@ import lombok.Getter;
 @Getter
 public enum ResponseCode {
 
-    // 成功返回
-    SUCCESS("200", "成功!"),
-    // 参数有误或者语义错误
-    CLIENT_EXCEPTION("400", "参数有误或者语义错误!"),
-    // token无效
-    TOKEN_INVALID("401", "令牌无效!"),
-    // token过期
-    TOKEN_TIME_OUT("402", "token过期!"),
-    // 无权限访问
-    ACCESS_DENIED("403", "无访问权限!"),
-    // 系统异常
-    SYSTEM_EXCEPTION("500", "系统异常!");
+    SUCCESS(200, "操作成功!"),
+    CLIENT_EXCEPTION(400, "参数有误或者语义错误!"),
+    TOKEN_INVALID(401, "令牌无效!"),
+    TOKEN_TIME_OUT(402, "token过期!"),
+    ACCESS_DENIED(403, "无访问权限!"),
+    SYSTEM_EXCEPTION(500, "系统异常!");
 
-    ResponseCode(String code, String msg) {
-        this.code = code;
+    ResponseCode(Integer status, String msg) {
+        this.status = status;
         this.msg = msg;
     }
 
     /**
      * 响应编码
      */
-    private final String code;
+    private final Integer status;
 
     /**
      * 响应编码说明
