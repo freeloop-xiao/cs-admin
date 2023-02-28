@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * <p>
- * 说明描叙
+ * redis序列化
  * </p>
  *
  * @author free loop

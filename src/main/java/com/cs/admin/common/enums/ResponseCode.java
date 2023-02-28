@@ -17,7 +17,7 @@ public enum ResponseCode {
     SUCCESS(200, "操作成功!"),
     CLIENT_EXCEPTION(400, "参数有误或者语义错误!"),
     TOKEN_INVALID(401, "令牌无效!"),
-    TOKEN_TIME_OUT(402, "token过期!"),
+    TOKEN_TIME_OUT(402, "令牌过期!"),
     ACCESS_DENIED(403, "无访问权限!"),
     SYSTEM_EXCEPTION(500, "系统异常!");
 

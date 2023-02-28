@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.cs.admin.system.dict.domain.dto.DictTypeEditDTO;
 import com.cs.admin.system.dict.domain.entity.SysDictType;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.Test;
 
 /**
  * <p>

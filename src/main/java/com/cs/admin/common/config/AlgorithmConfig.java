@@ -4,7 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.AsymmetricAlgorithm;
 import com.auth0.jwt.algorithms.Algorithm;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,14 +21,13 @@ import java.security.interfaces.RSAPublicKey;
  * @since 2021/1/27 13:56
  */
 @Configuration
+@AllArgsConstructor
 public class AlgorithmConfig {
 
-    @Autowired
-    private AuthYamlConfig authYamlConfig;
+    private final AuthYamlConfig authYamlConfig;
 
     @Bean
     public Algorithm algorithm() {
-//        return Algorithm.none();
         byte[] privateKeyBytes = Base64.decode(authYamlConfig.getPriKey());
         byte[] publicKeyBytes = Base64.decode(authYamlConfig.getPubKey());
         RSAPrivateKey privateKey = (RSAPrivateKey) SecureUtil.generatePrivateKey(AsymmetricAlgorithm.RSA.getValue(), privateKeyBytes);

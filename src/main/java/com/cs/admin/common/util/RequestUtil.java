@@ -9,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
+import org.springframework.core.io.InputStreamSource;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -135,5 +137,29 @@ public class RequestUtil {
         return "";
     }
 
+
+    /**
+     * 获取请求参数
+     *
+     * @param args 切面方法参数
+     * @return param
+     */
+    public static Object[] getRequestParam(Object[] args) {
+
+        // 打印请求入参,处理文件下载类型
+        Object[] clone = new Object[args.length];
+
+        for (int i = 0; i < args.length; i++) {
+
+            if (args[i] instanceof HttpServletResponse
+                    || args[i] instanceof InputStreamSource) {
+                clone[i] = null;
+            } else {
+                clone[i] = args[i];
+            }
+        }
+
+        return clone;
+    }
 
 }

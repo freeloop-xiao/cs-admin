@@ -21,12 +21,16 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
+
 repositories {
+    mavenLocal()
     maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     maven { url 'https://maven.aliyun.com/repository/google' }
     maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
     maven { url 'https://maven.aliyun.com/repository/jcenter'}
+    mavenCentral()
 }
 
 dependencies {
@@ -35,9 +39,9 @@ dependencies {
     implementation 'com.github.whvcse:easy-captcha:1.6.2'
     implementation 'org.mapstruct:mapstruct:1.4.1.Final'
     implementation 'eu.bitwalker:UserAgentUtils:1.21'
-    implementation 'cn.hutool:hutool-all:5.5.4'
+    implementation 'cn.hutool:hutool-all:5.8.11'
     implementation 'com.auth0:java-jwt:3.11.0'
-    implementation 'com.alibaba:fastjson:1.2.75'
+    implementation 'com.alibaba:fastjson:1.2.83'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.1'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -53,9 +57,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
-    testImplementation "org.testng:testng:6.10", "org.easytesting:fest-assert:1.4"
+    testImplementation 'org.testng:testng:7.7.0', "org.easytesting:fest-assert:1.4"
     testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
-    testImplementation 'org.apache.velocity:velocity-engine-core:2.2'
+    testImplementation 'org.apache.velocity:velocity-engine-core:2.3'
     testImplementation 'com.baomidou:mybatis-plus-generator:3.4.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -68,8 +72,4 @@ tasks.withType(JavaCompile).configureEach {
             '-Amapstruct.suppressGeneratorTimestamp=true',
             '-Amapstruct.suppressGeneratorVersionInfoComment=true'
     ]
-}
-
-configurations {
-    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }

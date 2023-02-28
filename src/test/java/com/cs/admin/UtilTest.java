@@ -1,16 +1,15 @@
 package com.cs.admin;
 
 import cn.hutool.core.codec.Base64;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSON;
 import com.cs.admin.common.util.RequestUtil;
 import com.cs.admin.common.util.TokenUtil;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
-import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -31,6 +30,11 @@ import java.util.stream.Collectors;
  */
 public class UtilTest {
 
+
+    @Test
+    public void jsonNull(){
+        System.out.println(JSON.toJSONString(null));
+    }
 
     @Test
     public void setTest(){
